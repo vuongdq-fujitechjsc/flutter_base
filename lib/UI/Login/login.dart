@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class LoginEightPage extends StatelessWidget {
   static final String path = "lib/src/pages/login/login8.dart";
+
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -15,13 +19,106 @@ class LoginEightPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   const SizedBox(height: 20),
-                  IconLogin(),
-                  TfUsername(),
-                  TfPassword(),
-                  CbSave(),
-                  BtnLogin(),
-                  LblForgotPassword(),
-                  LblMultiAccount(),
+                  //icon
+                  Container(
+                    width: 170,
+                    height: 170,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/ic_login.png'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  //username textfield
+                  makeTextField(
+                    _usernameController,
+                    placeHolderText: "ログインID",
+                    obsecureText: false,
+                  ),
+                  //password textfield
+                  makeTextField(
+                    _passwordController,
+                    placeHolderText: "パスワード",
+                    obsecureText: true,
+                  ),
+                  //checkbox save
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                    child: Row(
+                      children: [
+                        Checkbox(
+                          value: false,
+                          onChanged: (bool newValueCheck) {
+                            // setState(() {
+                            //   print('Current value of checkbox is: ');
+                            // });
+                          },
+                        ),
+                        Text(
+                          'パスワードを保存する',
+                          style: TextStyle(fontSize: 15, color: Colors.black),
+                        )
+                      ],
+                    ),
+                  ),
+                  //button login
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+                    child: RaisedButton(
+                      elevation: 0,
+                      color: Colors.red,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                      child: Text(
+                        "ログイン",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18.0,
+                        ),
+                      ),
+                      onPressed: () {},
+                      textColor: Colors.white,
+                      padding: const EdgeInsets.all(16.0),
+                    ),
+                  ),
+                  SizedBox(height: 10.0),
+                  GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => CupertinoAlertDialog(
+                          content: new Text(
+                              "「パスワード」を忘れたときは通塾されている教室へお問い合わせをお願いします。"),
+                          actions: <Widget>[
+                            CupertinoDialogAction(
+                              isDefaultAction: true,
+                              child: Text("OK"),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    child: Text(
+                      'パスワードを忘れた場合',
+                      style: TextStyle(fontSize: 15, color: Colors.blue),
+                    ),
+                  ),
+                  SizedBox(height: 10.0),
+                  GestureDetector(
+                    onTap: () {
+                      print('Open to Multi Account view');
+                    },
+                    child: Text(
+                      '別のアカウントを使用',
+                      style: TextStyle(fontSize: 15, color: Colors.blue),
+                    ),
+                  ),
                 ]),
           ),
         ),
@@ -30,161 +127,19 @@ class LoginEightPage extends StatelessWidget {
   }
 }
 
-class CbSave extends StatefulWidget {
-  const CbSave({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  _CbSaveState createState() => _CbSaveState();
-}
-
-class _CbSaveState extends State<CbSave> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(10, 0, 20, 0),
-      child: Row(
-        children: [
-          Checkbox(
-            value: false,
-            onChanged: (bool newValueCheck) {
-              setState(() {
-                print('Current value of checkbox is: ');
-              });
-            },
-          ),
-          Text(
-            'パスワードを保存する',
-            style: TextStyle(fontSize: 15, color: Colors.black),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class LblMultiAccount extends StatelessWidget {
-  const LblMultiAccount({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-      child: GestureDetector(
-        onTap: () {
-          print('Open to Multi Account view');
-        },
-        child: Text(
-          '別のアカウントを使用',
-          style: TextStyle(fontSize: 15, color: Colors.blue),
-        ),
-      ),
-    );
-  }
-}
-
-class LblForgotPassword extends StatelessWidget {
-  const LblForgotPassword({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-      child: GestureDetector(
-        onTap: () {
-          print('Open to Forgot password view');
-        },
-        child: Text(
-          'パスワードを忘れた場合',
-          style: TextStyle(fontSize: 15, color: Colors.blue),
-        ),
-      ),
-    );
-  }
-}
-
-class BtnLogin extends StatelessWidget {
-  const BtnLogin({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-      child: RaisedButton(
-        elevation: 0,
-        color: Colors.red,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5.0),
-        ),
-        child: Text(
-          "ログイン",
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 18.0,
-          ),
-        ),
-        onPressed: () {},
-        textColor: Colors.white,
-        padding: const EdgeInsets.all(16.0),
-      ),
-    );
-  }
-}
-
-class TfPassword extends StatelessWidget {
-  const TfPassword({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-      child: TextField(
-        decoration: InputDecoration(
-          filled: true,
-          fillColor: Colors.white,
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5.0),
-            borderSide: BorderSide(color: Colors.black45),
-          ),
-          border: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.black45),
-            borderRadius: BorderRadius.circular(5.0),
-          ),
-          hintText: "パスワード",
-          hintStyle: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.w300,
-            fontSize: 16.0,
-          ),
-          // errorText: "Error Text",
-          // errorStyle: TextStyle(fontSize: 14.0),
-        ),
-      ),
-    );
-  }
-}
-
-class TfUsername extends StatelessWidget {
-  const TfUsername({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-      child: TextField(
-          decoration: InputDecoration(
+Widget makeTextField(
+  TextEditingController tfController, {
+  placeHolderText,
+  obsecureText = false,
+  maxLength,
+}) {
+  return Padding(
+    padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+    child: TextField(
+      obscureText: obsecureText,
+      minLines: 1,
+      controller: tfController,
+      decoration: InputDecoration(
         filled: true,
         fillColor: Colors.white,
         enabledBorder: OutlineInputBorder(
@@ -195,34 +150,15 @@ class TfUsername extends StatelessWidget {
           borderSide: BorderSide(color: Colors.black45),
           borderRadius: BorderRadius.circular(5.0),
         ),
-        hintText: "ログインID",
+        hintText: placeHolderText,
         hintStyle: TextStyle(
           color: Colors.black,
           fontWeight: FontWeight.w300,
           fontSize: 16.0,
         ),
-        // errorText: "ErrorXtyle(fontSize: 14.0),
-      )),
-    );
-  }
-}
-
-class IconLogin extends StatelessWidget {
-  const IconLogin({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        width: 170,
-        height: 170,
-        padding: const EdgeInsets.all(15),
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/ic_login.png'),
-            fit: BoxFit.cover,
-          ),
-        ));
-  }
+        // errorText: "Error Text",
+        // errorStyle: TextStyle(fontSize: 14.0),
+      ),
+    ),
+  );
 }
