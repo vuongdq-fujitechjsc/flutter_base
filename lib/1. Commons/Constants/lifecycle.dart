@@ -1,0 +1,8 @@
+enum LifecycleState {
+  INITIALIZED,
+  CREATED,
+  STARTED,
+  RESUMED,
+  PAUSED,
+  DESTROYED,
+}

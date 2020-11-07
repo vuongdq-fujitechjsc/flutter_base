@@ -29,10 +29,26 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
 
+  # BLoC
+  bloc: ^6.1.0
+  flutter_bloc: ^6.0.6
+
   # An abstract class that helps to implement equality without needing to explicitly override == and hashCode. 
   equatable: ^1.2.5
 
+  # HTTP request
+  http: ^0.12.2
+  dio: ^3.0.10
 
+  # Handle JSON
+  json_annotation: ^3.1.0
+  json_serializable: ^3.5.0
+
+  # RxDart
+  rxdart: ^0.24.1
+
+  # Save local storage 
+  shared_preferences: ^0.5.12+2
   
 
 dev_dependencies:
