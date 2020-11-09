@@ -1,28 +1,36 @@
 import 'package:dio/dio.dart';
-import 'package:mimamu/1.%20Commons/Constants/constant.dart';
-import 'package:mimamu/2.%20Services/network/http_error.dart';
-import 'package:mimamu/2.%20Services/network/http_service.dart';
-import 'package:mimamu/2.%20Services/network/http_service_rx.dart';
-import 'package:mimamu/2.%20Services/network/interceptor_lock.dart';
+import 'package:connectivity/connectivity.dart';
+
+import '../constants/constants.dart';
+import '../models/models.dart';
+
+import 'http_service.dart';
+import 'http_service_rx.dart';
+import 'interceptor_lock.dart';
 
 class HttpClient implements HttpService, RxHttpService {
   static HttpClient _instance;
-  static HttpClient getInstance({timeOut = 10000}) {
+
+  static HttpClient getInstance({baseURL, timeOut = 30000, debug = false}) {
     if (_instance == null) {
-      _instance = HttpClient(timeOut);
+      _instance = HttpClient(baseURL, timeOut, debug);
     }
     return _instance;
+  }
+
+  static clearInstance() {
+    _instance = null;
   }
 
   Dio _dio;
   InterceptorLock _interceptor;
   Map<String, CancelToken> _cancelTokenMap;
 
-  HttpClient(int timeOut) {
+  HttpClient(String baseURL, int timeOut, bool isDebug) {
     _dio = Dio();
 
     BaseOptions options = BaseOptions();
-    options.baseUrl = Constant.BASE_URL;
+    options.baseUrl = ConstantsCore.BASE_URL;
     options.connectTimeout = timeOut;
     options.sendTimeout = timeOut;
     options.receiveTimeout = timeOut;
@@ -30,15 +38,25 @@ class HttpClient implements HttpService, RxHttpService {
 
     _interceptor = InterceptorLock(_dio);
     _dio.interceptors.add(_interceptor);
-    _dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-    ));
+    if (isDebug) {
+      _dio.interceptors
+          .add(LogInterceptor(requestBody: true, responseBody: true));
+    }
 
     _cancelTokenMap = Map<String, CancelToken>();
   }
 
   Dio get dio => _dio;
+
+  Future<bool> checkInternetConnection() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile) {
+      return true;
+    } else if (connectivityResult == ConnectivityResult.wifi) {
+      return true;
+    }
+    return false;
+  }
 
   @override
   Future<T> get<T>(

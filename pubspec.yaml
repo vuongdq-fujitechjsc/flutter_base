@@ -36,6 +36,9 @@ dependencies:
   # An abstract class that helps to implement equality without needing to explicitly override == and hashCode. 
   equatable: ^1.2.5
 
+  # Check connectivity
+  connectivity: ^2.0.1
+
   # HTTP request
   http: ^0.12.2
   dio: ^3.0.10
