@@ -27,7 +27,12 @@ class _SplashScreenState extends State<SplashScreen> {
             Navigator.pushReplacementNamed(context, RouterID.LOGIN);
           }
         });
-      } else {}
+      } else {
+        showNotificationDialog(
+          context: context,
+          content: multiLanguage.get('message_api_error'),
+        );
+      }
     });
   }
 
