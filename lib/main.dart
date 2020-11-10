@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'core/core.dart';
-import 'src/main/routes/router.dart';
+
+import 'src/routes/router.dart';
 import 'src/splash/splash.dart';
 
 void main() {
