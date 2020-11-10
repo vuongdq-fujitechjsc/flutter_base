@@ -1,4 +1,5 @@
 {
     "MSG001": "エラーが発生しました。",
-    "message_api_error": "通信エラーが発生しました"
+    "message_api_error": "通信エラーが発生しました",
+    "ok_action": "OK"
 }
