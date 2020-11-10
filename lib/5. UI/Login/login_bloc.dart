@@ -1,6 +1,6 @@
 import 'package:mimamu/2.%20Services/network/http_client.dart';
 import 'package:mimamu/3.%20Utilities/log_util.dart';
-import 'package:mimamu/4.%20Base/BLoC/base_bloc.dart';
+import 'package:mimamu/core/apps/base_bloc.dart';
 import 'package:mimamu/4.%20Base/Event/rx_bus_model.dart';
 import 'package:mimamu/5.%20UI/Login/login_event.dart';
 import 'package:mimamu/5.%20UI/Login/login_state.dart';

@@ -1,15 +1,17 @@
 import 'dart:async';
+
 import 'package:rxdart/rxdart.dart';
 
+import '../utilities/utility.dart';
+
 import 'live_data_interface.dart';
-import 'package:mimamu/3.%20Utilities/log_util.dart';
 
 class LiveData<T> {
-  BehaviorSubject<T> _subject;
+  PublishSubject<T> _subject;
   StreamSubscription<T> _subscription;
 
   LiveData() {
-    _subject = BehaviorSubject();
+    _subject = PublishSubject<T>();
   }
 
   void postValue(T value) {
@@ -28,7 +30,7 @@ class LiveData<T> {
   }
 
   Future<dynamic> close() {
-    LogUtil.debug('LiveData close !');
+    LogUtils.debug('LiveData close !');
     _subscription?.cancel();
     return _subject.close();
   }

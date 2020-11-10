@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:connectivity/connectivity.dart';
 
 import '../constants/constants.dart';
-import '../models/models.dart';
+import '../models/model.dart';
+import '../localizations/localizations.dart';
+import '../utilities/utility.dart';
 
 import 'http_service.dart';
 import 'http_service_rx.dart';
@@ -66,17 +70,33 @@ class HttpClient implements HttpService, RxHttpService {
     onCompleted,
     onFailed,
   }) async {
-    return await _dio
-        .get(subURL,
-            queryParameters: query,
-            cancelToken: _addCancelToken(subURL),
-            options: _addOptions(header))
-        .then((value) {
-      var json = value.data;
-      onCompleted(json);
-    }).catchError((error) {
-      onFailed(HttpError.withError(error: error));
-    });
+    bool internetConnection = await checkInternetConnection();
+    if (internetConnection) {
+      return await _dio
+          .get(subURL,
+              queryParameters: query,
+              cancelToken: _addCancelToken(subURL),
+              options: _addOptions(header))
+          .then((value) {
+        var json = value.data;
+        LogUtils.debug('API ==== GET $subURL');
+        LogUtils.debug('API onSuccess ==== $json');
+        onCompleted(json);
+      }).catchError((error) {
+        LogUtils.debug('API ==== GET $subURL');
+        if (error is DioError) {
+          LogUtils.debug(
+              'API onError ==== ${error.response?.statusCode ?? 0} == ${error.response}');
+        } else {
+          LogUtils.debug('API onError ==== ${error.toString()}');
+        }
+        onFailed(ErrorResponse.withError(error: error));
+      });
+    } else {
+      onFailed(
+          ErrorResponse(errorMessage: multiLanguage.get("message_api_error")));
+      return Completer().future;
+    }
   }
 
   @override
@@ -87,17 +107,35 @@ class HttpClient implements HttpService, RxHttpService {
     onCompleted,
     onFailed,
   }) async {
-    return await _dio
-        .post(subURL,
-            data: body,
-            cancelToken: _addCancelToken(subURL),
-            options: _addOptions(header))
-        .then((value) {
-      var json = value.data;
-      onCompleted(json);
-    }).catchError((error) {
-      onFailed(HttpError.withError(error: error));
-    });
+    bool internetConnection = await checkInternetConnection();
+    if (internetConnection) {
+      return await _dio
+          .post(subURL,
+              data: body,
+              cancelToken: _addCancelToken(subURL),
+              options: _addOptions(header))
+          .then((value) {
+        var json = value.data;
+        LogUtils.debug('API ==== POST $subURL');
+        LogUtils.debug('API params ==== $body');
+        LogUtils.debug('API onSuccess ==== $json');
+        onCompleted(json);
+      }).catchError((error) {
+        LogUtils.debug('API ==== POST $subURL');
+        LogUtils.debug('API params ==== $body');
+        if (error is DioError) {
+          LogUtils.debug(
+              'API onError ==== ${error.response?.statusCode ?? 0} == ${error.response}');
+        } else {
+          LogUtils.debug('API onError ==== ${error.toString()}');
+        }
+        onFailed(ErrorResponse.withError(error: error));
+      });
+    }else{
+      onFailed(
+          ErrorResponse(errorMessage: multiLanguage.get("message_api_error")));
+      return Completer().future;
+    }
   }
 
   @override
@@ -108,17 +146,35 @@ class HttpClient implements HttpService, RxHttpService {
     onCompleted,
     onFailed,
   }) async {
-    return await _dio
-        .put(subURL,
-            data: body,
-            cancelToken: _addCancelToken(subURL),
-            options: _addOptions(header))
-        .then((value) {
-      var json = value.data;
-      onCompleted(json);
-    }).catchError((error) {
-      onFailed(HttpError.withError(error: error));
-    });
+    bool internetConnection = await checkInternetConnection();
+    if (internetConnection) {
+      return await _dio
+          .put(subURL,
+              data: body,
+              cancelToken: _addCancelToken(subURL),
+              options: _addOptions(header))
+          .then((value) {
+        var json = value.data;
+        LogUtils.debug('API ==== PUT $subURL');
+        LogUtils.debug('API params ==== $body');
+        LogUtils.debug('API onSuccess ==== $json');
+        onCompleted(json);
+      }).catchError((error) {
+        LogUtils.debug('API ==== PUT $subURL');
+        LogUtils.debug('API params ==== $body');
+        if (error is DioError) {
+          LogUtils.debug(
+              'API onError ==== ${error.response?.statusCode ?? 0} == ${error.response}');
+        } else {
+          LogUtils.debug('API onError ==== ${error.toString()}');
+        }
+        onFailed(ErrorResponse.withError(error: error));
+      });
+    }else{
+      onFailed(
+          ErrorResponse(errorMessage: multiLanguage.get("message_api_error")));
+      return Completer().future;
+    }
   }
 
   @override
@@ -129,17 +185,35 @@ class HttpClient implements HttpService, RxHttpService {
     onCompleted,
     onFailed,
   }) async {
-    return await _dio
-        .patch(subURL,
-            data: body,
-            cancelToken: _addCancelToken(subURL),
-            options: _addOptions(header))
-        .then((value) {
-      var json = value.data;
-      onCompleted(json);
-    }).catchError((error) {
-      onFailed(HttpError.withError(error: error));
-    });
+    bool internetConnection = await checkInternetConnection();
+    if (internetConnection) {
+      return await _dio
+          .patch(subURL,
+              data: body,
+              cancelToken: _addCancelToken(subURL),
+              options: _addOptions(header))
+          .then((value) {
+        var json = value.data;
+        LogUtils.debug('API ==== PATCH $subURL');
+        LogUtils.debug('API params ==== $body');
+        LogUtils.debug('API onSuccess ==== $json');
+        onCompleted(json);
+      }).catchError((error) {
+        LogUtils.debug('API ==== PATCH $subURL');
+        LogUtils.debug('API params ==== $body');
+        if (error is DioError) {
+          LogUtils.debug(
+              'API onError ==== ${error.response?.statusCode ?? 0} == ${error.response}');
+        } else {
+          LogUtils.debug('API onError ==== ${error.toString()}');
+        }
+        onFailed(ErrorResponse.withError(error: error));
+      });
+    }else{
+      onFailed(
+          ErrorResponse(errorMessage: multiLanguage.get("message_api_error")));
+      return Completer().future;
+    }
   }
 
   @override
@@ -150,17 +224,33 @@ class HttpClient implements HttpService, RxHttpService {
     onCompleted,
     onFailed,
   }) async {
-    return await _dio
-        .delete(subURL,
-            queryParameters: query,
-            cancelToken: _addCancelToken(subURL),
-            options: _addOptions(header))
-        .then((value) {
-      var json = value.data;
-      onCompleted(json);
-    }).catchError((error) {
-      onFailed(HttpError.withError(error: error));
-    });
+    bool internetConnection = await checkInternetConnection();
+    if (internetConnection) {
+      return await _dio
+          .delete(subURL,
+              queryParameters: query,
+              cancelToken: _addCancelToken(subURL),
+              options: _addOptions(header))
+          .then((value) {
+        var json = value.data;
+        LogUtils.debug('API ==== DELETE $subURL');
+        LogUtils.debug('API onSuccess ==== $json');
+        onCompleted(json);
+      }).catchError((error) {
+        LogUtils.debug('API ==== DELETE $subURL');
+        if (error is DioError) {
+          LogUtils.debug(
+              'API onError ==== ${error.response?.statusCode ?? 0} == ${error.response}');
+        } else {
+          LogUtils.debug('API onError ==== ${error.toString()}');
+        }
+        onFailed(ErrorResponse.withError(error: error));
+      });
+    } else {
+      onFailed(
+          ErrorResponse(errorMessage: multiLanguage.get("message_api_error")));
+      return Completer().future;
+    }
   }
 
   @override

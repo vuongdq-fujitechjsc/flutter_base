@@ -1,8 +1,10 @@
 import 'dart:async';
+
 import 'package:rxdart/rxdart.dart';
 
-import 'rx_bus_model.dart';
 import '../live_data/live_data.dart';
+
+import 'rx_bus_model.dart';
 
 class FluBus {
   PublishSubject<dynamic> _subject;

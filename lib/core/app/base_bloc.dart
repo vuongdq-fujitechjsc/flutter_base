@@ -1,9 +1,10 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
-import 'package:mimamu/core/live_data/lifecycle.dart';
-import 'package:mimamu/core/live_data/live_data_implement.dart';
-import 'package:mimamu/3.%20Utilities/log_util.dart';
-import 'package:mimamu/4.%20Base/Event/rx_bus_model.dart';
+
+import '../live_data/live_data.dart';
+import '../events/events.dart';
+import '../utilities/utility.dart';
 
 abstract class BaseBloc<Event, State> extends Bloc<Event, State> {
   LiveData<RxEventModel> _liveData = LiveData();
@@ -17,7 +18,7 @@ abstract class BaseBloc<Event, State> extends Bloc<Event, State> {
 
   void injectBloc<T extends Bloc>(T parentBloc) {
     this._parentBloc = parentBloc;
-    LogUtil.debug(
+    LogUtils.debug(
         'BaseBloc: InjectBloc ${parentBloc.toString()} to ${this.toString()}');
     if (this._parentBloc is BaseBloc) {
       _subscription =
@@ -44,7 +45,7 @@ abstract class BaseBloc<Event, State> extends Bloc<Event, State> {
   void dispose() {
     _liveData?.close();
     _subscription?.cancel()?.catchError((error) {
-      LogUtil.error('${this.toString()} { error : $error}');
+      LogUtils.debug('${this.toString()} { error : $error}');
     });
   }
 }

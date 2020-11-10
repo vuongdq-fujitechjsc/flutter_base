@@ -3,9 +3,9 @@ import 'package:dio/dio.dart';
 import '../constants/constants.dart';
 import '../extensions/extensions.dart';
 import '../contexts/contexts.dart';
+import '../utilities/utility.dart';
 
 import 'http_client.dart';
-import 'package:mimamu/3.%20Utilities/log_util.dart';
 
 class InterceptorLock extends InterceptorsWrapper {
   Dio _tokenDio = Dio();
@@ -25,7 +25,7 @@ class InterceptorLock extends InterceptorsWrapper {
       if (!token.isEmptyTrim()) {
         final bearerToken = 'Bearer ' + token;
         options.headers[ConstantsCore.ACCESS_TOKEN] = bearerToken;
-        LogUtil.debug('InterceptorLock: token: $bearerToken');
+        LogUtils.debug('InterceptorLock: token: $bearerToken');
         return super.onRequest(options);
       }else{
         //get token
