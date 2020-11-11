@@ -25,7 +25,6 @@ class LoginRepository {
         if (token != null) {
           //save token
           //add token to singleton
-          LogUtils.debug(token);
         }
 
         completer.complete(null);
