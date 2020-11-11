@@ -19,12 +19,12 @@ class _SplashScreenState extends State<SplashScreen> {
         _checkToken().then((isLogined) async {
           if (isLogined) {
             //update account service
-            
+
             //push to main
-            Navigator.pushReplacementNamed(context, RouterID.MAIN);
+            Navigator.pushNamed(context, RouterID.MAIN);
           } else {
             //push to login
-            Navigator.pushReplacementNamed(context, RouterID.LOGIN);
+            Navigator.pushNamed(context, RouterID.LOGIN);
           }
         });
       } else {
@@ -38,12 +38,16 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        child: Text(
-          'Demo',
-          style: TextStyle(
-            fontSize: 13,
+    return Scaffold(
+      body: SafeArea(
+              child: Center(
+          child: Container(
+            child: Text(
+              'Splash Screen',
+              style: TextStyle(
+                fontSize: 13,
+              ),
+            ),
           ),
         ),
       ),

@@ -18,7 +18,4 @@ class ConstantsCore {
   static const String API_HEADER_VALUE_1 = 'Bearer ';
   static const String API_HEADER_VALUE_2 = 'application/json';
   static const String API_HEADER_VALUE_3 = 'application/json';
-
-  //colors
-  static const String COLOR_TEXT_01 = '#4F4F4F';
 }

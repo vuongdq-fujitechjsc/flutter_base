@@ -21,7 +21,7 @@ void showNotificationDialog({
               child: Text(
                 title,
                 style: TextStyle(
-                    color: HexColor(ConstantsCore.COLOR_TEXT_01),
+                    color: HexColor(Color.COLOR_TEXT_1),
                     fontSize: Dimension.textSize16,
                     fontWeight: FontWeight.bold),
               ),
@@ -33,7 +33,7 @@ void showNotificationDialog({
         child: Text(
           content,
           style: TextStyle(
-            color: HexColor(ConstantsCore.COLOR_TEXT_01),
+            color: HexColor(Color.COLOR_TEXT_1),
             fontSize: Dimension.textSize13,
             fontWeight: FontWeight.normal,
           ),

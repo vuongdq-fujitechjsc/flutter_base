@@ -1,5 +1,12 @@
 {
     "MSG001": "エラーが発生しました。",
     "message_api_error": "通信エラーが発生しました",
-    "ok_action": "OK"
+    "ok_action": "OK",
+    "login_username_title": "ログインID",
+    "login_password_title": "パスワード",
+    "login_save_title": "パスワードを保存する",
+    "login_login_button": "ログイン",
+    "login_forgot_password_title": "パスワードを忘れた場合",
+    "login_forgot_password_dialog": "「パスワード」を忘れたときは通塾されている教室へお問い合わせをお願いします。",
+    "login_multi_account_title": "別のアカウントを使用"
 }

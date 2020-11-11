@@ -1,9 +1,10 @@
 import 'package:fluro/fluro.dart' as Fluro;
 import 'package:flutter/material.dart';
 
-import '../splash/splash.dart';
-import '../login/login.dart';
+import '../account/account.dart';
 import '../home/home.dart';
+import '../login/login.dart';
+import '../splash/splash.dart';
 
 import 'router_id.dart';
 
@@ -24,10 +25,15 @@ class FluroRouter {
       handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
           HomeScreen());
 
+  static Fluro.Handler _accountHandler = Fluro.Handler(
+      handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
+          AccountScreen());
+
   //setup
   static void configRouter() {
     router.define(RouterID.SPLASH, handler: _splashHandler);
     router.define(RouterID.LOGIN, handler: _loginHandler);
     router.define(RouterID.MAIN, handler: _homeHandler);
+    router.define(RouterID.MULTI_ACCOUNT, handler: _accountHandler, transitionType: Fluro.TransitionType.inFromRight);
   }
 }

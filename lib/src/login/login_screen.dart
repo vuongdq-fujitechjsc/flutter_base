@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/core.dart';
 import '../home/home.dart';
+import '../routes/router.dart';
 
 import 'login_event.dart';
 import 'login_state.dart';
@@ -26,6 +27,7 @@ class _LoginFormState extends BasePage<LoginForm, LoginBloc, AppBloc> {
   final _passwordController = TextEditingController();
 
   bool _isInProgress = false;
+  bool _isSaveAccount = false;
 
   @override
   LoginBloc getBlocData(BuildContext context) => LoginBloc();
@@ -57,7 +59,7 @@ class _LoginFormState extends BasePage<LoginForm, LoginBloc, AppBloc> {
                   child: Hud(
                     child: SingleChildScrollView(
                       child: Container(
-                        color: Colors.white,
+                        padding: const EdgeInsets.fromLTRB(30, 20, 30, 0),
                         child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -67,70 +69,54 @@ class _LoginFormState extends BasePage<LoginForm, LoginBloc, AppBloc> {
                               Container(
                                 width: 170,
                                 height: 170,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage('assets/ic_login.png'),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
+                                child: Image.asset(AssetUtils.instance()
+                                    .getImageUrl("ic_login.png")),
                               ),
                               //username textfield
-                              makeTextField(
-                                _usernameController,
-                                placeHolderText: "ログインID",
-                                obsecureText: false,
+                              TextfieldWithTitle(
+                                controller: _usernameController,
+                                hint: multiLanguage.get('login_username_title'),
                               ),
                               //password textfield
-                              makeTextField(
-                                _passwordController,
-                                placeHolderText: "パスワード",
-                                obsecureText: true,
+                              PasswordTextfieldWithTitle(
+                                controller: _passwordController,
+                                hint: multiLanguage.get('login_password_title'),
+                                isSecureText: true,
                               ),
+                              const SizedBox(height: 10.0),
                               //checkbox save
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                                child: Row(
-                                  children: [
-                                    Checkbox(
-                                      value: false,
-                                      onChanged: (bool newValueCheck) {
-                                        // setState(() {
-                                        //   print('Current value of checkbox is: ');
-                                        // });
-                                      },
-                                    ),
-                                    Text(
-                                      'パスワードを保存する',
-                                      style: TextStyle(
-                                          fontSize: 15, color: Colors.black),
-                                    )
-                                  ],
-                                ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Checkbox(
+                                    value: _isSaveAccount,
+                                    onChanged: _checkboxChanged,
+                                  ),
+                                  Text(
+                                    multiLanguage.get('login_save_title'),
+                                    style: TextStyle(
+                                        fontSize: 15, color: Colors.black),
+                                  )
+                                ],
                               ),
+                              const SizedBox(height: 10.0),
                               //button login
                               Container(
                                 width: double.infinity,
-                                padding:
-                                    const EdgeInsets.fromLTRB(20, 10, 20, 0),
                                 child: RaisedButton(
                                   elevation: 0,
-                                  color: Colors.red,
+                                  color: HexColor(Color.COLOR_MAIN),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(5.0),
                                   ),
                                   child: Text(
-                                    "ログイン",
+                                    multiLanguage.get('login_login_button'),
                                     style: TextStyle(
                                       fontWeight: FontWeight.w500,
-                                      fontSize: 18.0,
+                                      fontSize: Dimension.textSize16,
                                     ),
                                   ),
                                   onPressed: () {
-                                    print("Tapped");
-                                    // if (state is LoginInProgress) {
-                                    //   return;
-                                    // }
-
                                     String _username = _usernameController.text;
                                     String _password = _passwordController.text;
 
@@ -142,17 +128,19 @@ class _LoginFormState extends BasePage<LoginForm, LoginBloc, AppBloc> {
                                 ),
                               ),
                               SizedBox(height: 10.0),
+                              //label forgot password
                               GestureDetector(
                                 onTap: () {
                                   showDialog(
                                     context: context,
                                     builder: (context) => CupertinoAlertDialog(
-                                      content: new Text(
-                                          "「パスワード」を忘れたときは通塾されている教室へお問い合わせをお願いします。"),
+                                      content: new Text(multiLanguage
+                                          .get('login_forgot_password_dialog')),
                                       actions: <Widget>[
                                         CupertinoDialogAction(
                                           isDefaultAction: true,
-                                          child: Text("OK"),
+                                          child: Text(
+                                              multiLanguage.get('ok_action')),
                                           onPressed: () {
                                             Navigator.pop(context);
                                           },
@@ -162,20 +150,26 @@ class _LoginFormState extends BasePage<LoginForm, LoginBloc, AppBloc> {
                                   );
                                 },
                                 child: Text(
-                                  'パスワードを忘れた場合',
+                                  multiLanguage
+                                      .get('login_forgot_password_title'),
                                   style: TextStyle(
-                                      fontSize: 15, color: Colors.blue),
+                                    fontSize: Dimension.textSize14,
+                                    color: HexColor(Color.COLOR_TEXT_MAIN),
+                                  ),
                                 ),
                               ),
-                              SizedBox(height: 10.0),
+                              SizedBox(height: 5.0),
+                              //label multi password
                               GestureDetector(
-                                onTap: () {
-                                  print('Open to Multi Account view');
-                                },
+                                onTap: () => Navigator.pushNamed(
+                                    context, RouterID.MULTI_ACCOUNT),
                                 child: Text(
-                                  '別のアカウントを使用',
+                                  multiLanguage
+                                      .get('login_multi_account_title'),
                                   style: TextStyle(
-                                      fontSize: 15, color: Colors.blue),
+                                    fontSize: Dimension.textSize14,
+                                    color: HexColor(Color.COLOR_TEXT_MAIN),
+                                  ),
                                 ),
                               ),
                             ]),
@@ -214,40 +208,11 @@ class _LoginFormState extends BasePage<LoginForm, LoginBloc, AppBloc> {
       );
     }
   }
-}
 
-Widget makeTextField(
-  TextEditingController tfController, {
-  placeHolderText,
-  obsecureText = false,
-  maxLength,
-}) {
-  return Padding(
-    padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-    child: TextField(
-      obscureText: obsecureText,
-      minLines: 1,
-      controller: tfController,
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: Colors.white,
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5.0),
-          borderSide: BorderSide(color: Colors.black45),
-        ),
-        border: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black45),
-          borderRadius: BorderRadius.circular(5.0),
-        ),
-        hintText: placeHolderText,
-        hintStyle: TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.w300,
-          fontSize: 16.0,
-        ),
-        // errorText: "Error Text",
-        // errorStyle: TextStyle(fontSize: 14.0),
-      ),
-    ),
-  );
+  //handle checkbox
+  void _checkboxChanged(bool newValue) => setState(() {
+        LogUtils.debug('Call me - currentValue is: $_isSaveAccount');
+        _isSaveAccount = newValue;
+        LogUtils.debug('Call me - newValue is: $_isSaveAccount');
+      });
 }
