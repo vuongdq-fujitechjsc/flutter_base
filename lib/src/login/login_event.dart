@@ -13,7 +13,3 @@ class LoginPressed extends LoginEvent {
   @override
   List<Object> get props => [this.username, this.password];
 }
-
-class LoginEventSuccess extends LoginEvent {}
-
-class LoginEventFailure extends LoginEvent {}

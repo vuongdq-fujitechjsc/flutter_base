@@ -31,7 +31,7 @@ abstract class BaseBloc<Event, State> extends Bloc<Event, State> {
   Bloc get parentBloc => _parentBloc;
 
   void setWidgetState(LifecycleState widgetState) {
-    this._widgetState = widgetState;
+    _widgetState = widgetState;
   }
 
   void dispatchEvent(RxEventModel event) {}

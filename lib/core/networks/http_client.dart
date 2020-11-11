@@ -38,6 +38,10 @@ class HttpClient implements HttpService, RxHttpService {
     options.connectTimeout = timeOut;
     options.sendTimeout = timeOut;
     options.receiveTimeout = timeOut;
+    options.headers = {
+      ConstantsCore.API_HEADER_KEY_2 : ConstantsCore.API_HEADER_VALUE_2,
+      ConstantsCore.API_HEADER_KEY_3 : ConstantsCore.API_HEADER_VALUE_3,
+    };
     _dio.options = options;
 
     _interceptor = InterceptorLock(_dio);
@@ -103,7 +107,7 @@ class HttpClient implements HttpService, RxHttpService {
   Future<T> post<T>(
     String subURL, {
     Map<String, String> header,
-    Map<String, String> body,
+    dynamic body,
     onCompleted,
     onFailed,
   }) async {
