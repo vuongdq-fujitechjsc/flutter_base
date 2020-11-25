@@ -1,120 +1,59 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/core.dart';
 
-class HomeScreen extends StatefulWidget {
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
+import 'home_event.dart';
+import 'home_state.dart';
+import 'home_bloc.dart';
 
-class _HomeScreenState extends State<HomeScreen> {
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      child: Scaffold(
-        body: SafeArea(
-          child: Column(children: [
-            Container(
-              child: Column(
-                children: [
-                  AuthenticateNavigation(isShowBackButton: true),
-                  Center(
-                    child: Text(
-                      'Home Screen',
-                      style: TextStyle(
-                        fontSize: 13,
-                      ),
-                    ),
-                  )
-                ],
-              ),
+    return HomeForm();
+  }
+}
+
+class HomeForm extends StatefulWidget {
+  @override
+  _HomeFormState createState() => _HomeFormState();
+}
+
+class _HomeFormState extends BasePage<HomeForm, HomeBloc, AppBloc> {
+  HomeBloc _bloc;
+
+  @override
+  HomeBloc getBlocData(BuildContext context) => _bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    LogUtils.debug('HomeScreen - initState');
+
+    _bloc = HomeBloc();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<HomeBloc>.value(
+      value: _bloc,
+      child: BlocConsumer<HomeBloc, HomeState>(
+        builder: (context, state) {
+          return MyNavigation(
+            navigationData: NavigationData(
+              navigationLeftButtonType: NavigationLeftButtonType.iconMenu,
+              navigationTitle: "Home Screen",
             ),
-          ]),
-        ),
+            tapMenuButton: () => bloc.add(ToggleMenuEvent()),
+            bodyWidget: Container(),
+          );
+        },
+        listener: (context, state) {
+          _handleHomeState(context, state);
+        },
       ),
-      onWillPop: () => _onBackPressed(),
     );
   }
 
-  Future<bool> _onBackPressed() => SystemNavigator.pop();
+  _handleHomeState(context, state) {}
 }
-
-
-// import 'package:flutter/material.dart';
-// import 'package:mimamu/5.%20UI/Login/login.dart';
-
-// void main() {
-//   runApp(MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Flutter Demo',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//         visualDensity: VisualDensity.adaptivePlatformDensity,
-//       ),
-//       home: MyHomePage(title: 'Flutter Demo Home Page'),
-//     );
-//   }
-// }
-
-// class MyHomePage extends StatefulWidget {
-//   MyHomePage({Key key, this.title}) : super(key: key);
-
-//   final String title;
-
-//   @override
-//   _MyHomePageState createState() => _MyHomePageState();
-// }
-
-// class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
-//   //init state
-//   @override
-//   void initState() {
-//     WidgetsBinding.instance.addObserver(this);
-//     super.initState();
-//   }
-
-//   //dispose
-//   @override
-//   void dispose() {
-//     WidgetsBinding.instance.removeObserver(this);
-//     super.dispose();
-//   }
-
-//   //detect life cycle state
-//   @override
-//   void didChangeAppLifecycleState(AppLifecycleState appCycleState) {
-//     super.didChangeAppLifecycleState(appCycleState);
-
-//     switch (appCycleState) {
-//       //inactive (IOS only)
-//       case AppLifecycleState.inactive:
-//         print("App LifeCycle State current is InActive");
-//         break;
-//       //paused (background)
-//       case AppLifecycleState.paused:
-//         print("App LifeCycle State current is Background");
-//         break;
-//       //resumed (foreground)
-//       case AppLifecycleState.resumed:
-//         print("App LifeCycle State current is Foreground");
-//         break;
-//       //detached
-//       case AppLifecycleState.detached:
-//         print("App LifeCycle State current is Detached");
-//         break;
-//       default:
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return LoginScreen();
-//   }
-// }

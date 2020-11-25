@@ -23,7 +23,7 @@ class Color {
   static const String COLOR_TEXT_19 = '#DADADA';
   static const String COLOR_TEXT_20 = '#5B7AC9';
 
-  static const String COLOR_TEXT_BLACK = '#000000';
+  static const String COLOR_BLACK = '#000000';
   static const String COLOR_WHITE = '#FFFFFF';
 
   static const String COLOR_TEXT_HINT = '#E0E0E0';

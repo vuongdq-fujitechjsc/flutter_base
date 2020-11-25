@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mimamu/src/main/main_screen.dart';
 
 import '../../core/core.dart';
 import '../home/home.dart';
@@ -188,31 +189,36 @@ class _LoginFormState extends BasePage<LoginForm, LoginBloc, AppBloc> {
   void _handleState(context, state) {
     _isInProgress = state is LoginInProgress;
 
-    if (state is LoginSuccess) {
-      Navigator.pushAndRemoveUntil(
+    //auto push to home for test 
+    Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
+        MaterialPageRoute(builder: (context) => MainScreen()),
         (Route<dynamic> route) => false,
       );
-    } else if (state is LoginValidate) {
-      showNotificationDialog(
-        context: context,
-        title: state.title,
-        content: state.content,
-      );
-    } else if (state is LoginFailure) {
-      showNotificationDialog(
-        context: context,
-        title: "",
-        content: state.errorMessage,
-      );
-    }
+
+    // if (state is LoginSuccess) {
+    //   Navigator.pushAndRemoveUntil(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => HomeScreen()),
+    //     (Route<dynamic> route) => false,
+    //   );
+    // } else if (state is LoginValidate) {
+    //   showNotificationDialog(
+    //     context: context,
+    //     title: state.title,
+    //     content: state.content,
+    //   );
+    // } else if (state is LoginFailure) {
+    //   showNotificationDialog(
+    //     context: context,
+    //     title: "",
+    //     content: state.errorMessage,
+    //   );
+    // }
   }
 
   //handle checkbox
   void _checkboxChanged(bool newValue) => setState(() {
-        LogUtils.debug('Call me - currentValue is: $_isSaveAccount');
         _isSaveAccount = newValue;
-        LogUtils.debug('Call me - newValue is: $_isSaveAccount');
       });
 }

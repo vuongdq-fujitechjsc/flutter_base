@@ -19,3 +19,7 @@ class ConstantsCore {
   static const String API_HEADER_VALUE_2 = 'application/json';
   static const String API_HEADER_VALUE_3 = 'application/json';
 }
+
+enum EmitEventName{
+  ToogleMenu
+}

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../app/app.dart';
-import '../live_data/live_data.dart';
+import '../../app/app.dart';
+import '../../live_data/live_data.dart';
+import '../view.dart';
 
 import 'base_page_ext.dart';
-import 'view.dart';
 
 abstract class BasePage<T extends StatefulWidget, K extends Bloc,
     C extends Bloc> extends State<T> with WidgetsBindingObserver, BasePageExt {
@@ -85,6 +85,7 @@ abstract class BasePage<T extends StatefulWidget, K extends Bloc,
 
   @override
   void dispose() {
+    print("$T ==> dispose");
     _state = LifecycleState.DESTROYED;
     if (_bloc is BaseBloc) {
       (_bloc as BaseBloc).dispose();

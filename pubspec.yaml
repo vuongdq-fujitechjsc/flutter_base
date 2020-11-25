@@ -59,6 +59,9 @@ dependencies:
   # Navigation controller 
   fluro: ^1.7.7
 
+  # Convert enum to string 
+  enum_to_string: ^1.0.14
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
