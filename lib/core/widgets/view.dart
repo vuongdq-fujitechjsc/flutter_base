@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:mimamu/core/core.dart';
 
 import '../localizations/localizations.dart';
 
@@ -34,6 +35,42 @@ class InputDoneView extends StatelessWidget {
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class MenuSelectItemRow extends StatelessWidget {
+  final String title;
+  final void Function() onTap;
+
+  MenuSelectItemRow({
+    this.title,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 44.0,
+        child: Row(
+          children: <Widget>[
+            const SizedBox(
+              width: 20,
+            ),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: HexColor(Color.COLOR_TEXT_SIDE_MENU),
+                fontSize: Dimension.textSize14,
+                fontWeight: FontWeight.bold,
+              ),
+            )
+          ],
         ),
       ),
     );

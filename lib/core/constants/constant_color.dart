@@ -2,6 +2,8 @@ class Color {
   static const String COLOR_MAIN = '#FE920A';
   static const String COLOR_TEXT_MAIN = '#3B86AF';
 
+  static const String COLOR_TEXT_SIDE_MENU = '#1c1c1c';
+
   static const String COLOR_TEXT_1 = '#4F4F4F';
   static const String COLOR_TEXT_2 = '#2F80ED';
   static const String COLOR_TEXT_3 = '#007AFF';

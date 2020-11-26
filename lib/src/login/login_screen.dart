@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mimamu/src/main/main_screen.dart';
 
 import '../../core/core.dart';
-import '../home/home.dart';
 import '../routes/router.dart';
 
 import 'login_event.dart';

@@ -2,16 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/core.dart';
+import '../routes/router.dart';
 import '../home/home.dart';
+import '../login/login.dart';
 
 import 'main_event.dart';
 import 'main_state.dart';
 import 'main_bloc.dart';
 
+enum SideMenuItem {
+  changePassword,
+  multiAccount,
+}
+
 class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      onGenerateRoute: FluroRouter.router.generator,
       home: MainForm(),
     );
   }
@@ -28,8 +36,6 @@ class _MainFormState extends BasePage<MainForm, MainBloc, AppBloc>
   double _screenWidth, _screenHeight;
 
   bool _isCollapsed;
-
-  String _demoText;
 
   final Duration _animationDuration = const Duration(milliseconds: 200);
 
@@ -101,27 +107,59 @@ class _MainFormState extends BasePage<MainForm, MainBloc, AppBloc>
                 child: Container(
                   width: 0.6 * _screenWidth,
                   color: HexColor(Color.COLOR_WHITE),
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(
-                          height: 20.0,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Container(
+                        height: _screenHeight - 44.0 - 20.0,
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppBar(
+                                title:
+                                    Text(multiLanguage.get('side_menu_title')),
+                                backgroundColor: HexColor(Color.COLOR_MAIN),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              _menuSelectItemRow(
+                                  SideMenuItem.changePassword, state, context),
+                              Divider(),
+                              _menuSelectItemRow(
+                                  SideMenuItem.multiAccount, state, context),
+                              Divider(),
+                            ],
+                          ),
                         ),
-                        ColoredBox(color: HexColor(Color.COLOR_MAIN)),
-                        PreferredSize(
-                          child: Container(),
-                          preferredSize: Size.fromHeight(44),
+                      ),
+                      Container(
+                        color: HexColor(Color.COLOR_MAIN),
+                        child: FlatButton(
+                          child: Text(
+                            multiLanguage.get('side_menu_logout'),
+                            style: TextStyle(
+                              color: HexColor(Color.COLOR_WHITE),
+                            ),
+                          ),
+                          minWidth: 0.6 * _screenWidth,
+                          height: 44.0,
+                          onPressed: () => {
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LoginScreen(),
+                              ),
+                              (Route<dynamic> route) => false,
+                            )
+                          },
                         ),
-                        Center(
-                          child: Text('Demo Menu'),
-                        )
-                      ],
-                    ),
+                      )
+                    ],
                   ),
                 ),
               ),
@@ -191,6 +229,37 @@ class _MainFormState extends BasePage<MainForm, MainBloc, AppBloc>
         },
       ),
     );
+  }
+
+  //SideMenu
+  Widget _menuSelectItemRow(
+      SideMenuItem type, MainState state, BuildContext context) {
+    switch (type) {
+      case SideMenuItem.changePassword:
+        return MenuSelectItemRow(
+          title: multiLanguage.get('side_menu_change_password'),
+          onTap: () {
+            setState(() {
+              findBloc<MainBloc>(context).add(ToggleMenuEvent());
+              Navigator.pushNamed(context, RouterID.CHANGE_PASSWORD);
+            });
+          },
+        );
+        break;
+      case SideMenuItem.multiAccount:
+        return MenuSelectItemRow(
+          title: multiLanguage.get('side_menu_multi_account'),
+          onTap: () {
+            setState(() {
+              findBloc<MainBloc>(context).add(ToggleMenuEvent());
+              Navigator.pushNamed(context, RouterID.MULTI_ACCOUNT);
+            });
+          },
+        );
+        break;
+      default:
+        return Container();
+    }
   }
 
   _handleMenuState(context, state) {}
