@@ -7,6 +7,7 @@ class Dimension {
   static const double pad50 = 50.0;
 
   static const double radius10 = 10.0;
+  static const double radius15 = 15.0;
   static const double radiusCicle = 50.0;
 
   static const double textSize13 = 13.0;

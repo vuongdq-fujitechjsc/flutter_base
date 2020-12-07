@@ -38,4 +38,6 @@ class Color {
   static const String COLOR_MESSAGE = '#FFF2CC';
   static const String COLOR_BORDER_MESSAGE = '#A5A5A5';
   static const String COLOR_BORDER_INPUT_TEXT = '#D0D4D9';
+
+  static const String COLOR_BACKGROUND = '#F4F4F4';
 }

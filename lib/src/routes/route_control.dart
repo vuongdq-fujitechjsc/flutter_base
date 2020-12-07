@@ -7,6 +7,7 @@ import '../home/home.dart';
 import '../login/login.dart';
 import '../main/main.dart';
 import '../splash/splash.dart';
+import '../webview/webview.dart';
 
 import 'router_id.dart';
 
@@ -39,6 +40,10 @@ class FluroRouter {
       handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
           ChangePasswordScreen());
 
+  static Fluro.Handler _webviewHandler = Fluro.Handler(
+      handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
+          WebViewScreen());
+
   //setup
   static void configRouter() {
     router.define(RouterID.SPLASH, handler: _splashHandler);
@@ -53,6 +58,11 @@ class FluroRouter {
     router.define(
       RouterID.CHANGE_PASSWORD,
       handler: _changePasswordHandler,
+      transitionType: Fluro.TransitionType.inFromRight,
+    );
+    router.define(
+      RouterID.WEBVIEW,
+      handler: _webviewHandler,
       transitionType: Fluro.TransitionType.inFromRight,
     );
   }

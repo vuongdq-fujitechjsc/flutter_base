@@ -196,6 +196,7 @@ class _MainFormState extends BasePage<MainForm, MainBloc, AppBloc>
           backgroundColor: Colors.white,
           body: Stack(
             children: [
+              HomeScreen(),
               Visibility(
                 visible: !_isCollapsed,
                 child: Container(
@@ -210,7 +211,6 @@ class _MainFormState extends BasePage<MainForm, MainBloc, AppBloc>
                   ),
                 ),
               ),
-              HomeScreen(),
             ],
           ),
         ),

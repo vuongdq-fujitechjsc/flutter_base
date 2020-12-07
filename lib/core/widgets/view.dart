@@ -76,3 +76,56 @@ class MenuSelectItemRow extends StatelessWidget {
     );
   }
 }
+
+class HomeSelectItemGrid extends StatelessWidget {
+  final String assetImage;
+  final String title;
+  final void Function() onTap;
+
+  HomeSelectItemGrid({
+    this.assetImage,
+    this.title,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: HexColor(Color.COLOR_BACKGROUND),
+          borderRadius: BorderRadius.circular(
+            Dimension.radius15,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              width: 60,
+              height: 60,
+              child: Image.asset(
+                AssetUtils.instance().getImageUrl(assetImage),
+                fit: BoxFit.fill,
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              title,
+              style: TextStyle(
+                color: HexColor(Color.COLOR_TEXT_1),
+                fontSize: Dimension.textSize14,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}

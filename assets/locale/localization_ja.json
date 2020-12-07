@@ -12,5 +12,11 @@
     "side_menu_title": "設定",
     "side_menu_change_password": "パスワード変更",
     "side_menu_multi_account": "アカウントを使用",
-    "side_menu_logout": "ログアウト"
+    "side_menu_logout": "ログアウト",
+    "home_item_qr_code": "入退室QRコード",
+    "home_item_in_out_manage": "出社管理",
+    "home_item_event": "イベント",
+    "home_item_discussion": "相談",
+    "home_item_notification": "お知らせ",
+    "home_item_communication": "コミュニケーション"
 }
