@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/core.dart';
 import '../routes/router.dart';
+import '../login/model/login_model.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -14,6 +15,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+
+    // DBProvider.db.deleteDB();
+    DBProvider.db.getAllUser();
+
     HttpClient.getInstance().checkInternetConnection().then((value) {
       if (value) {
         _checkToken().then((isLogined) async {
@@ -40,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-              child: Center(
+        child: Center(
           child: Container(
             child: Text(
               'Splash Screen',
@@ -56,8 +61,13 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<dynamic> _checkToken() async {
     var completer = new Completer();
-    SharedPreferencesManager.get(ConstantsCore.ACCESS_TOKEN, "").then((token) {
-      if (token.length > 0) {
+    SharedPreferencesManager.get(ConstantsCore.STORAGE_ACCOUNT_ACTIVE, "")
+        .then((account) async {
+      LoginData activeAccount = await DBProvider.db.getUser(account);
+      final loginState =
+          await SharedPreferencesManager.get<bool>(ConstantsCore.STORAGE_IS_LOGIN, false);
+
+      if ((activeAccount.access_token.length > 0) && loginState) {
         completer.complete(true);
       } else {
         completer.complete(false);
