@@ -20,19 +20,27 @@ class LoginModel {
 
 @JsonSerializable()
 class LoginData {
+  String access_token;
+  String refresh_token;
   final int student_id;
   final String student_name;
-  final String access_token;
-  final String refresh_token;
+  String account_name;
+  String account_password;
+  int is_default_password;
 
   LoginData({
-    this.student_id,
-    this.student_name,
     this.access_token,
     this.refresh_token,
+    this.student_id,
+    this.student_name,
+    this.account_name,
+    this.account_password,
+    this.is_default_password,
   });
 
   factory LoginData.fromJson(Map<String, dynamic> json) {
     return _$LoginDataFromJson(json);
   }
+
+  Map<String, dynamic> toJson() => _$LoginDataToJson(this);
 }

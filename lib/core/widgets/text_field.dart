@@ -22,25 +22,28 @@ class TextfieldWithTitle extends StatefulWidget {
   final Function(String) onChange;
   final TextInputAction textInputAction;
   final bool enableInteractiveSelection;
+  final String errorText;
 
-  TextfieldWithTitle(
-      {this.title: "",
-      this.hint: "",
-      this.controller,
-      this.maxLength,
-      this.minLine,
-      this.maxLine: 1,
-      this.textColor: Color.COLOR_TEXT_1,
-      this.hintColor: Color.COLOR_TEXT_HINT,
-      this.cursorColor: Color.COLOR_TEXT_1,
-      this.fontSize: 15,
-      this.enableEdit: true,
-      this.onChange,
-      this.fontWeight: FontWeight.normal,
-      this.textInputAction,
-      this.textInputType: TextInputType.text,
-      this.enableInteractiveSelection: true,
-      this.inputFormat});
+  TextfieldWithTitle({
+    this.title: "",
+    this.hint: "",
+    this.controller,
+    this.maxLength,
+    this.minLine,
+    this.maxLine: 1,
+    this.textColor: Color.COLOR_TEXT_1,
+    this.hintColor: Color.COLOR_TEXT_HINT,
+    this.cursorColor: Color.COLOR_TEXT_1,
+    this.fontSize: 15,
+    this.enableEdit: true,
+    this.onChange,
+    this.fontWeight: FontWeight.normal,
+    this.textInputAction,
+    this.textInputType: TextInputType.text,
+    this.enableInteractiveSelection: true,
+    this.inputFormat,
+    this.errorText,
+  });
 
   @override
   _TextfieldWithTitleState createState() => _TextfieldWithTitleState();
@@ -96,14 +99,17 @@ class _TextfieldWithTitleState extends State<TextfieldWithTitle> {
               : null,
           decoration: InputDecoration(
             border: UnderlineInputBorder(
-                borderSide:
-                    BorderSide(color: HexColor(Color.COLOR_DIVIDER))),
+                borderSide: BorderSide(color: HexColor(Color.COLOR_DIVIDER))),
             counterText: '',
             hintText: widget.hint,
             hintStyle: TextStyle(
                 color: HexColor(widget.hintColor),
                 fontWeight: widget.fontWeight,
                 fontSize: widget.fontSize),
+            errorText: widget.errorText,
+             errorStyle: TextStyle(
+                  fontSize: Dimension.textSize10,
+                ),
           ),
         ),
       ],
@@ -125,6 +131,7 @@ class PasswordTextfieldWithTitle extends StatefulWidget {
   final double fontSize;
   final Function(String) onChange;
   final bool enableInteractiveSelection;
+  final String errorText;
 
   PasswordTextfieldWithTitle({
     this.title: "",
@@ -140,6 +147,7 @@ class PasswordTextfieldWithTitle extends StatefulWidget {
     this.inputFormat,
     this.enableInteractiveSelection: true,
     this.onChange,
+    this.errorText,
   });
 
   @override
@@ -202,16 +210,21 @@ class _PasswordTextfieldWithTitleState
                       new FilteringTextInputFormatter(RegExp(" "), allow: false)
                     ],
               decoration: InputDecoration(
-                  border: UnderlineInputBorder(
-                      borderSide:
-                          BorderSide(color: HexColor(Color.COLOR_DIVIDER))),
-                  counterText: '',
-                  hintText: widget.hint,
-                  hintStyle: TextStyle(
-                      color: HexColor(widget.hintColor),
-                      fontSize: widget.fontSize),
-                  contentPadding:
-                      EdgeInsets.only(right: widget.isSecureText ? 40 : 0)),
+                border: UnderlineInputBorder(
+                    borderSide:
+                        BorderSide(color: HexColor(Color.COLOR_DIVIDER))),
+                counterText: '',
+                hintText: widget.hint,
+                hintStyle: TextStyle(
+                    color: HexColor(widget.hintColor),
+                    fontSize: widget.fontSize),
+                contentPadding:
+                    EdgeInsets.only(right: widget.isSecureText ? 40 : 0),
+                errorText: widget.errorText,
+                errorStyle: TextStyle(
+                  fontSize: Dimension.textSize10,
+                ),
+              ),
             ),
             () {
               if (widget.isSecureText) {

@@ -41,7 +41,7 @@ void showNotificationDialog({
       ),
       actions: [
         CupertinoDialogAction(
-          child: Text(doneButtonTitle ?? multiLanguage.get('done_action')),
+          child: Text(doneButtonTitle ?? multiLanguage.get('ok_action')),
           onPressed: () => {
             if (doneAction != null) {doneAction()} else {Navigator.pop(context)}
           },

@@ -18,8 +18,11 @@ class ConstantsCore {
   static const String API_HEADER_VALUE_1 = 'Bearer ';
   static const String API_HEADER_VALUE_2 = 'application/json';
   static const String API_HEADER_VALUE_3 = 'application/json';
+
+  static const String STORAGE_ACCOUNT_ACTIVE = 'account_active';
+  static const String STORAGE_IS_LOGIN = 'is_login';
 }
 
-enum EmitEventName{
-  ToogleMenu
+enum EmitEventName {
+  ToogleMenu,
 }

@@ -19,7 +19,7 @@ class InterceptorLock extends InterceptorsWrapper {
   Future onRequest(RequestOptions options) async {
     if (options.path != ConstantsCore.API_GET_TOKEN &&
         options.path != ConstantsCore.API_REFRESH_TOKEN) {
-          //get token from local storage
+      //get token from local storage
       String token = '';
 
       if (!token.isEmptyTrim()) {
@@ -27,7 +27,7 @@ class InterceptorLock extends InterceptorsWrapper {
         options.headers[ConstantsCore.ACCESS_TOKEN] = bearerToken;
         LogUtils.debug('InterceptorLock: token: $bearerToken');
         return super.onRequest(options);
-      }else{
+      } else {
         //get token
       }
     }
@@ -38,7 +38,9 @@ class InterceptorLock extends InterceptorsWrapper {
   Future onError(DioError error) {
     var httpCode = error.response.statusCode;
 
-    if (httpCode == 401) {
+    if (httpCode == 401 &&
+        (error.request.path != ConstantsCore.API_GET_TOKEN ||
+            error.request.path != ConstantsCore.API_REFRESH_TOKEN)) {
       //refresh token
       var options = error.response.request;
       String token = '';
@@ -59,7 +61,9 @@ class InterceptorLock extends InterceptorsWrapper {
 
       var map = Map<String, String>();
       map['token'] = token;
-      return _tokenDio.post(ConstantsCore.API_REFRESH_TOKEN, data: map).then((value) {
+      return _tokenDio
+          .post(ConstantsCore.API_REFRESH_TOKEN, data: map)
+          .then((value) {
         // Update token
         options.headers[ConstantsCore.ACCESS_TOKEN] = '';
 

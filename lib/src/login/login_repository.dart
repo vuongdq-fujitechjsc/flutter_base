@@ -18,13 +18,30 @@ class LoginRepository {
     HttpClient.getInstance().post(
       ConstantsCore.API_GET_TOKEN,
       body: json.encode(map),
-      onCompleted: (json) {
+      onCompleted: (json) async {
         var response = LoginModel.fromJson(json);
         final token = response.data.access_token;
 
         if (token != null) {
-          //save token
-          //add token to singleton
+          //save login state
+          SharedPreferencesManager.putBool(
+              ConstantsCore.STORAGE_IS_LOGIN, true);
+
+          //delete user if duplicate in database
+          await DBProvider.db.deleteUser(response.data);
+
+          //change account info
+          response.data.account_name = username;
+          response.data.account_password = password;
+
+          //save account to database
+          await DBProvider.db.createUser(response.data);
+
+          //save active account
+          await SharedPreferencesManager.putString(
+              ConstantsCore.STORAGE_ACCOUNT_ACTIVE, response.data.account_name);
+
+          //setting notification
         }
 
         completer.complete(null);

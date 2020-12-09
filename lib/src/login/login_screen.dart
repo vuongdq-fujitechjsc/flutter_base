@@ -29,6 +29,11 @@ class _LoginFormState extends BasePage<LoginForm, LoginBloc, AppBloc> {
   bool _isInProgress = false;
   bool _isSaveAccount = false;
 
+  bool _isValidateUsername = false;
+  bool _isValidatePassword = false;
+  String _errorValidateUsername;
+  String _errorValidatePassword;
+
   @override
   LoginBloc getBlocData(BuildContext context) => LoginBloc();
 
@@ -76,12 +81,18 @@ class _LoginFormState extends BasePage<LoginForm, LoginBloc, AppBloc> {
                               TextfieldWithTitle(
                                 controller: _usernameController,
                                 hint: multiLanguage.get('login_username_title'),
+                                errorText: _isValidateUsername
+                                    ? null
+                                    : _errorValidateUsername,
                               ),
                               //password textfield
                               PasswordTextfieldWithTitle(
                                 controller: _passwordController,
                                 hint: multiLanguage.get('login_password_title'),
                                 isSecureText: true,
+                                errorText: _isValidatePassword
+                                    ? null
+                                    : _errorValidatePassword,
                               ),
                               const SizedBox(height: 10.0),
                               //checkbox save
@@ -120,8 +131,41 @@ class _LoginFormState extends BasePage<LoginForm, LoginBloc, AppBloc> {
                                     String _username = _usernameController.text;
                                     String _password = _passwordController.text;
 
-                                    BlocProvider.of<LoginBloc>(context).add(
-                                        LoginPressed(_username, _password));
+                                    setState(() {
+                                      if (_usernameController.text
+                                          .isEmptyTrim()) {
+                                        _isValidateUsername = false;
+                                        _errorValidateUsername =
+                                            multiLanguage.get('MSG002');
+                                      } else if (!_usernameController.text
+                                          .isValidUsername()) {
+                                        _isValidateUsername = false;
+                                        _errorValidateUsername =
+                                            multiLanguage.get('MSG004');
+                                      } else {
+                                        _isValidateUsername = true;
+                                      }
+
+                                      if (_passwordController.text
+                                          .isEmptyTrim()) {
+                                        _isValidatePassword = false;
+                                        _errorValidatePassword =
+                                            multiLanguage.get('MSG003');
+                                      } else if (!_passwordController.text
+                                          .isValidPassword()) {
+                                        _isValidatePassword = false;
+                                        _errorValidatePassword =
+                                            multiLanguage.get('MSG005');
+                                      } else {
+                                        _isValidatePassword = true;
+                                      }
+                                    });
+
+                                    if (_isValidateUsername &&
+                                        _isValidatePassword) {
+                                      BlocProvider.of<LoginBloc>(context).add(
+                                          LoginPressed(_username, _password));
+                                    }
                                   },
                                   textColor: Colors.white,
                                   padding: const EdgeInsets.all(16.0),
@@ -188,32 +232,26 @@ class _LoginFormState extends BasePage<LoginForm, LoginBloc, AppBloc> {
   void _handleState(context, state) {
     _isInProgress = state is LoginInProgress;
 
-    //auto push to home for test 
-    Navigator.pushAndRemoveUntil(
+    //auto push to home for test
+    // Navigator.pushAndRemoveUntil(
+    //   context,
+    //   MaterialPageRoute(builder: (context) => MainScreen()),
+    //   (Route<dynamic> route) => false,
+    // );
+
+    if (state is LoginSuccess) {
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => MainScreen()),
         (Route<dynamic> route) => false,
       );
-
-    // if (state is LoginSuccess) {
-    //   Navigator.pushAndRemoveUntil(
-    //     context,
-    //     MaterialPageRoute(builder: (context) => HomeScreen()),
-    //     (Route<dynamic> route) => false,
-    //   );
-    // } else if (state is LoginValidate) {
-    //   showNotificationDialog(
-    //     context: context,
-    //     title: state.title,
-    //     content: state.content,
-    //   );
-    // } else if (state is LoginFailure) {
-    //   showNotificationDialog(
-    //     context: context,
-    //     title: "",
-    //     content: state.errorMessage,
-    //   );
-    // }
+    } else if (state is LoginFailure) {
+      showNotificationDialog(
+        context: context,
+        title: "",
+        content: state.errorMessage,
+      );
+    }
   }
 
   //handle checkbox

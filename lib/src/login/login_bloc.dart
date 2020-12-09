@@ -16,11 +16,6 @@ class LoginBloc extends BaseBloc<LoginEvent, LoginState> {
     if (event is LoginPressed) {
       yield LoginInProgress();
 
-      if (event.username.isEmptyTrim() || event.password.isEmptyTrim()) {
-        yield LoginValidate();
-        return;
-      }
-
       final errorMessage =
           await _repository.login(event.username, event.password);
       if (errorMessage == null) {

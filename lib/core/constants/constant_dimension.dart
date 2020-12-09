@@ -10,6 +10,7 @@ class Dimension {
   static const double radius15 = 15.0;
   static const double radiusCicle = 50.0;
 
+  static const double textSize10 = 10.0;
   static const double textSize13 = 13.0;
   static const double textSize14 = 14.0;
   static const double textSize16 = 16.0;
