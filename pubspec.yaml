@@ -65,7 +65,7 @@ dependencies:
   enum_to_string: ^1.0.14
 
   # Webview
-  flutter_webview_plugin: ^0.3.11
+  webview_flutter: ^1.0.7
 
 dev_dependencies:
   flutter_test:

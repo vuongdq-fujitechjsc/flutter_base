@@ -48,8 +48,14 @@ class FluroRouter {
           ChangePasswordScreen());
 
   static Fluro.Handler _webviewHandler = Fluro.Handler(
-      handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
-          WebViewScreen());
+      handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+    WebViewData data = ModalRoute.of(context).settings.arguments;
+    return WebViewScreen(
+      title: data.title,
+      url: data.url,
+      token: data.token,
+    );
+  });
 
   //setup
   static void configRouter() {

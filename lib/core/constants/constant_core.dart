@@ -1,5 +1,5 @@
 class ConstantsCore {
-  static const String BASE_URL = 'http://18.178.144.100';
+  static const String BASE_URL = 'https://dev.mimamu.co.jp';
 
   static const String API_GET_TOKEN = '/api/auth/student/token';
   static const String API_REFRESH_TOKEN = '/api/auth/token/refresh';
@@ -8,6 +8,13 @@ class ConstantsCore {
       '/api/auth/student/password/default';
   static const String API_GET_VERSION = '/api/student/version';
   static const String API_LOGOUT = '/api/auth/logout';
+
+  static const String WEB_QR_CODE = BASE_URL + '/admin/attendance/code/student/';
+  static const String WEB_IN_OUT_MANEGEMENT = BASE_URL + '/admin/attendance/month/student/';
+  static const String WEB_EVENT = BASE_URL + '/admin/event/app/event-calendar/';
+  static const String WEB_DISCUSSION = BASE_URL + '/admin/intv-app/list/';
+  static const String WEB_NOTIFICATION = BASE_URL + '/admin/jouhoubox/app/jouhou-list/';
+  static const String WEB_COMMUNICATION = BASE_URL + '/admin/communication/app/class';
 
   static const String ACCESS_TOKEN = 'Authorization';
 
@@ -27,7 +34,7 @@ enum EmitEventName {
   ToogleMenu,
 }
 
-enum LoginViewMode{
+enum LoginViewMode {
   Login,
   AddAccount,
 }
