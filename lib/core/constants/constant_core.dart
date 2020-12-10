@@ -26,3 +26,8 @@ class ConstantsCore {
 enum EmitEventName {
   ToogleMenu,
 }
+
+enum LoginViewMode{
+  Login,
+  AddAccount,
+}

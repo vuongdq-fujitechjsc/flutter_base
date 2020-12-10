@@ -37,12 +37,15 @@ class NavigationData {
   final String navigationTitle;
   final Widget rightButton;
 
+  final bool isShowNavigation;
+
   const NavigationData({
     this.navigationLeftButtonType,
     this.navigationCenterType,
     this.navigationRightButtonType,
     this.navigationTitle,
     this.rightButton,
+    this.isShowNavigation = false,
   });
 }
 
@@ -71,14 +74,10 @@ class _MyNavigationState
       ? null
       : widget.navigationTitleStream.stream;
 
-  AppBloc _appBloc;
-
   @override
   void initState() {
     super.initState();
     LogUtils.debug('MyNavigationWidget - initState');
-
-    _appBloc = BlocProvider.of<AppBloc>(context);
   }
 
   @override
@@ -97,10 +96,9 @@ class _MyNavigationState
     );
   }
 
-
   Widget _buildNavigationBar(NavigationData navigationData) {
     return PreferredSize(
-      child: CustomAppBar(
+      child: navigationData.isShowNavigation ? CustomAppBar(
         backgroundColor: HexColor(Color.COLOR_MAIN),
         leading: _buildLeftButton(navigationData.navigationLeftButtonType),
         title: StreamBuilder(
@@ -119,7 +117,8 @@ class _MyNavigationState
           },
         ),
         trailing: _buildRightButton(navigationData.navigationRightButtonType),
-      ),
+      )
+      : Container(),
       preferredSize: Size.fromHeight(44),
     );
   }
@@ -172,7 +171,7 @@ class _MyNavigationState
       case NavigationRightButtonType.iconNotification:
         return Container();
       case NavigationRightButtonType.iconOther:
-        return Container();
+        return widget.navigationData.rightButton;
         break;
       default:
         return Container();

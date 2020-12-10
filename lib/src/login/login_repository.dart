@@ -27,12 +27,12 @@ class LoginRepository {
           SharedPreferencesManager.putBool(
               ConstantsCore.STORAGE_IS_LOGIN, true);
 
-          //delete user if duplicate in database
-          await DBProvider.db.deleteUser(response.data);
-
           //change account info
           response.data.account_name = username;
           response.data.account_password = password;
+
+          //delete user if duplicate in database
+          await DBProvider.db.deleteUser(response.data);
 
           //save account to database
           await DBProvider.db.createUser(response.data);

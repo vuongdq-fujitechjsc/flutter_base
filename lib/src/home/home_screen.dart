@@ -55,6 +55,7 @@ class _HomeFormState extends BasePage<HomeForm, HomeBloc, AppBloc> {
         builder: (context, state) {
           return MyNavigation(
             navigationData: NavigationData(
+              isShowNavigation: true,
               navigationLeftButtonType: NavigationLeftButtonType.iconMenu,
               navigationTitle: "Home Screen",
             ),

@@ -6,8 +6,9 @@ abstract class MainState extends Equatable {
   @override
   List<Object> get props => [];
 }
-class MainInitial extends MainState{}
 
-class MainShowMenu extends MainState{}
+class MainInitial extends MainState {}
 
-class MainHideMenu extends MainState{}
+class MainShowMenu extends MainState {}
+
+class MainHideMenu extends MainState {}

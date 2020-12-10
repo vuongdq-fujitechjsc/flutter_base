@@ -118,4 +118,12 @@ class DBProvider {
     final db = await database;
     db.rawDelete("DELETE * FROM Mimamu_USER");
   }
+
+  countUser() async {
+    final db = await database;
+    var query = await db.rawQuery("SELECT COUNT(*) FROM Mimamu_USER");
+
+    int count = Sqflite.firstIntValue(query);
+    return count;
+  }
 }

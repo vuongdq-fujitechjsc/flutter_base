@@ -1,6 +1,7 @@
 class RouterID {
   static const SPLASH = 'splash';
   static const LOGIN = 'login';
+  static const ADD_ACCOUNT = 'add_account';
   static const MAIN = 'main';
   static const Home = 'home';
   static const MENU = 'menu';

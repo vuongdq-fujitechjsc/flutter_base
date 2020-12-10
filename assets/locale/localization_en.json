@@ -7,6 +7,7 @@
     "MSG006": "エラーが発生しました。",
     "message_api_error": "通信エラーが発生しました",
     "ok_action": "OK",
+    "login_add_account_title": "アカウント追加",
     "login_username_title": "ログインID",
     "login_password_title": "パスワード",
     "login_save_title": "パスワードを保存する",
@@ -16,12 +17,17 @@
     "login_multi_account_title": "別のアカウントを使用",
     "side_menu_title": "設定",
     "side_menu_change_password": "パスワード変更",
-    "side_menu_multi_account": "アカウントを使用",
+    "side_menu_multi_account": "別のアカウントを使用",
     "side_menu_logout": "ログアウト",
     "home_item_qr_code": "入退室QRコード",
     "home_item_in_out_manage": "出社管理",
     "home_item_event": "イベント",
     "home_item_discussion": "相談",
     "home_item_notification": "お知らせ",
-    "home_item_communication": "コミュニケーション"
+    "home_item_communication": "コミュニケーション",
+    "account_navigation_title": "アカウント切りがえ",
+    "account_navigation_right_button_change": "編集",
+    "account_navigation_right_button_done": "完了",
+    "account_navigation_bottom_button": "アカウント追加"
+    
 }

@@ -64,6 +64,9 @@ dependencies:
   # Convert enum to string 
   enum_to_string: ^1.0.14
 
+  # Webview
+  flutter_webview_plugin: ^0.3.11
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -18,10 +18,7 @@ enum SideMenuItem {
 class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      onGenerateRoute: FluroRouter.router.generator,
-      home: MainForm(),
-    );
+    return MainForm();
   }
 }
 
@@ -152,7 +149,9 @@ class _MainFormState extends BasePage<MainForm, MainBloc, AppBloc>
                             Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => LoginScreen(),
+                                builder: (context) => LoginScreen(
+                                  mode: LoginViewMode.Login,
+                                ),
                               ),
                               (Route<dynamic> route) => false,
                             )

@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:mimamu/src/login/login.dart';
+import 'package:mimamu/src/main/main.dart';
 
 import '../../core/core.dart';
 import '../routes/router.dart';
@@ -26,10 +28,23 @@ class _SplashScreenState extends State<SplashScreen> {
             //update account service
 
             //push to main
-            Navigator.pushNamed(context, RouterID.MAIN);
+            // Navigator.pushNamed(context, RouterID.MAIN);
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => MainScreen()),
+                (Route<dynamic> route) => false);
+            //       Navigator.pushAndRemoveUntil(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => MainScreen()),
+            //   (Route<dynamic> route) => false,
+            // );
           } else {
             //push to login
-            Navigator.pushNamed(context, RouterID.LOGIN);
+            // Navigator.pushNamed(context, RouterID.LOGIN);
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => LoginScreen()),
+                (Route<dynamic> route) => false);
           }
         });
       } else {
@@ -64,8 +79,8 @@ class _SplashScreenState extends State<SplashScreen> {
     SharedPreferencesManager.get(ConstantsCore.STORAGE_ACCOUNT_ACTIVE, "")
         .then((account) async {
       LoginData activeAccount = await DBProvider.db.getUser(account);
-      final loginState =
-          await SharedPreferencesManager.get<bool>(ConstantsCore.STORAGE_IS_LOGIN, false);
+      final loginState = await SharedPreferencesManager.get<bool>(
+          ConstantsCore.STORAGE_IS_LOGIN, false);
 
       if ((activeAccount.access_token.length > 0) && loginState) {
         completer.complete(true);

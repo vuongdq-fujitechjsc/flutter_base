@@ -1,6 +1,7 @@
 import 'package:fluro/fluro.dart' as Fluro;
 import 'package:flutter/material.dart';
 
+import '../../core/core.dart';
 import '../account/account.dart';
 import '../change_password/change_password.dart';
 import '../home/home.dart';
@@ -21,8 +22,14 @@ class FluroRouter {
           SplashScreen());
 
   static Fluro.Handler _loginHandler = Fluro.Handler(
-      handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
-          LoginScreen());
+    handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
+        LoginScreen(mode: LoginViewMode.Login),
+  );
+
+  static Fluro.Handler _addAccountHandler = Fluro.Handler(
+    handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
+        LoginScreen(mode: LoginViewMode.AddAccount),
+  );
 
   static Fluro.Handler _mainHandler = Fluro.Handler(
       handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
@@ -48,6 +55,11 @@ class FluroRouter {
   static void configRouter() {
     router.define(RouterID.SPLASH, handler: _splashHandler);
     router.define(RouterID.LOGIN, handler: _loginHandler);
+    router.define(
+      RouterID.ADD_ACCOUNT,
+      handler: _addAccountHandler,
+      transitionType: Fluro.TransitionType.inFromRight,
+    );
     router.define(RouterID.MAIN, handler: _mainHandler);
     router.define(RouterID.Home, handler: _homeHandler);
     router.define(
