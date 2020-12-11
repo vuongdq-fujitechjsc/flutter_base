@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:webview_flutter/platform_interface.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../core/core.dart';
@@ -65,21 +66,36 @@ class _WebViewFormState extends BasePage<WebViewForm, WebviewBloc, AppBloc>
                 isShowNavigation: true,
                 navigationLeftButtonType: NavigationLeftButtonType.iconBack,
                 navigationTitle: widget.title),
-            bodyWidget: Scaffold(body: WebView(
-              javascriptMode: JavascriptMode.unrestricted,
-              onWebViewCreated: (WebViewController webController) {
-                Map<String, String> headers = {
-                  ConstantsCore.API_HEADER_KEY_1:
-                      ConstantsCore.API_HEADER_VALUE_1 + widget.token,
-                  ConstantsCore.API_HEADER_KEY_3:
-                      ConstantsCore.API_HEADER_VALUE_3,
-                };
-                webController.loadUrl(
-                  widget.url,
-                  headers: headers,
-                );
-              },
-            )),
+            bodyWidget: Scaffold(
+              body: WebView(
+                javascriptMode: JavascriptMode.unrestricted,
+                onWebViewCreated: (WebViewController webController) {
+                  Map<String, String> headers = {
+                    ConstantsCore.API_HEADER_KEY_1:
+                        ConstantsCore.API_HEADER_VALUE_1 + widget.token,
+                    ConstantsCore.API_HEADER_KEY_3:
+                        ConstantsCore.API_HEADER_VALUE_3,
+                  };
+                  webController.loadUrl(
+                    widget.url,
+                    headers: headers,
+                  );
+                },
+                onWebResourceError: (WebResourceError error) {
+                  print('error');
+                  print(error.errorCode);
+                },
+                onPageStarted: (String url) {
+                  LogUtils.debug('Start load: $url');
+                },
+                onPageFinished: (String url) {
+                  LogUtils.debug('Finish load: $url');
+                },
+                navigationDelegate: (navigation) async {
+                  
+                },
+              ),
+            ),
           );
         },
         listener: (context, state) => _handleWebviewState(context, state),

@@ -178,7 +178,7 @@ class _HomeFormState extends BasePage<HomeForm, HomeBloc, AppBloc> {
             RouterID.WEBVIEW,
             arguments: WebViewData(
               title: multiLanguage.get('home_item_qr_code'),
-              url: ConstantsCore.WEB_COMMUNICATION,
+              url: ConstantsCore.WEB_COMMUNICATION +"ff",
               token: _accessToken,
             ),
           ),

@@ -5,6 +5,16 @@
     "MSG004": "「ログインID」の長さは7文字以上14文字以下に設定してください。",
     "MSG005": "「パスワード」の長さは8文字以上14文字以下に設定してください。",
     "MSG006": "エラーが発生しました。",
+    "MSG007": "「現在のパスワード」を入力してください。",
+    "MSG008": "「現在のパスワード」の長さは8文字以上14文字以下に設定してください。",
+    "MSG009": "「新しいパスワード」を入力してください。",
+    "MSG010": "「新しいパスワード」の長さは8文字以上14文字以下に設定してください。",
+    "MSG011": "「新しいパスワード（確認）」を入力してください。",
+    "MSG012": "「新しいパスワード（確認）」の長さは8文字以上14文字以下に設定してください。",
+    "MSG013": "「新しいパスワード」と「新しいパスワード（確認）」が異なります。",
+    "MSG014": "「現在のパスワード」と「新しいパスワード」が異なるものを指定してください。",
+    "MSG015": "現在のパスワードが登録されているものと異なります。",
+    "MSG016": "「パスワード」が変更されました。",
     "message_api_error": "通信エラーが発生しました",
     "ok_action": "OK",
     "login_add_account_title": "アカウント追加",
@@ -28,6 +38,10 @@
     "account_navigation_title": "アカウント切りがえ",
     "account_navigation_right_button_change": "編集",
     "account_navigation_right_button_done": "完了",
-    "account_navigation_bottom_button": "アカウント追加"
-    
+    "account_navigation_bottom_button": "アカウント追加",
+    "change_password_title": "パスワード変更",
+    "change_password_old_password": "現在のパスワード",
+    "change_password_new_password": "新しいパスワード",
+    "change_password_confirm_new_password": "新しいパスワード（確認）",
+    "change_password_button": "変更"
 }

@@ -146,7 +146,7 @@ class HttpClient implements HttpService, RxHttpService {
   Future<T> put<T>(
     String subURL, {
     Map<String, String> header,
-    Map<String, String> body,
+    dynamic body,
     onCompleted,
     onFailed,
   }) async {
@@ -185,7 +185,7 @@ class HttpClient implements HttpService, RxHttpService {
   Future<T> patch<T>(
     String subURL, {
     Map<String, String> header,
-    Map<String, String> body,
+    dynamic body,
     onCompleted,
     onFailed,
   }) async {

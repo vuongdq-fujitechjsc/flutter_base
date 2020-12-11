@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mimamu/src/main/main_screen.dart';
+
 
 import '../../core/core.dart';
 import '../routes/router.dart';
+import '../main/main.dart';
 
 import 'login_event.dart';
 import 'login_state.dart';
@@ -66,9 +67,6 @@ class _LoginFormState extends BasePage<LoginForm, LoginBloc, AppBloc> {
             return this.bloc;
           },
           child: BlocConsumer<LoginBloc, LoginState>(
-            listener: (context, state) {
-              _handleState(context, state);
-            },
             builder: (context, state) {
               return MyNavigation(
                 navigationData: NavigationData(
@@ -185,7 +183,7 @@ class _LoginFormState extends BasePage<LoginForm, LoginBloc, AppBloc> {
                                   if (_isValidateUsername &&
                                       _isValidatePassword) {
                                     BlocProvider.of<LoginBloc>(context).add(
-                                        LoginPressed(_username, _password));
+                                        LoginPressed(_username.trim(), _password.trim()));
                                   }
                                 },
                                 textColor: Colors.white,
@@ -248,6 +246,9 @@ class _LoginFormState extends BasePage<LoginForm, LoginBloc, AppBloc> {
                 ),
               );
             },
+            listener: (context, state) {
+              _handleState(context, state);
+            },
           ),
         ),
       ),
@@ -257,13 +258,6 @@ class _LoginFormState extends BasePage<LoginForm, LoginBloc, AppBloc> {
   //handle state
   void _handleState(context, state) {
     _isInProgress = state is LoginInProgress;
-
-    //auto push to home for test
-    // Navigator.pushAndRemoveUntil(
-    //   context,
-    //   MaterialPageRoute(builder: (context) => MainScreen()),
-    //   (Route<dynamic> route) => false,
-    // );
 
     if (state is LoginSuccess) {
       Navigator.pushAndRemoveUntil(
